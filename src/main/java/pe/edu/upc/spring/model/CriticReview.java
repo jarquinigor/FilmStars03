@@ -28,7 +28,7 @@ public class CriticReview implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idMovie", nullable = false)
 	private Movie movie;
-	
+
 	@Column(name="textReview", nullable=false, length=400)
 	private String textCriticReview;
 
@@ -71,7 +71,8 @@ public class CriticReview implements Serializable {
 	public String getTextCriticReview() {
 		return textCriticReview;
 	}
-
+	
+	
 	public void setTextCriticReview(String textCriticReview) {
 		this.textCriticReview = textCriticReview;
 	}
