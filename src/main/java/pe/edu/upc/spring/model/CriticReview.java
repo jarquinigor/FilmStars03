@@ -71,8 +71,7 @@ public class CriticReview implements Serializable {
 	public String getTextCriticReview() {
 		return textCriticReview;
 	}
-	
-	
+
 	public void setTextCriticReview(String textCriticReview) {
 		this.textCriticReview = textCriticReview;
 	}
