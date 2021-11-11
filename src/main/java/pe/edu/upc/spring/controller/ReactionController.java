@@ -16,14 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sun.el.parser.ParseException;
 
-import pe.edu.upc.spring.model.Actor;
-import pe.edu.upc.spring.service.IActorService;
+import pe.edu.upc.spring.model.Reaction;
+import pe.edu.upc.spring.service.IReactionService;
 
 @Controller
-@RequestMapping("/actor")
-public class ActorController {
+@RequestMapping("/reaccion")
+public class ReactionController {
 	@Autowired
-	private IActorService aService;
+	private IReactionService rService;
 	
 	@RequestMapping("/bienvenido")
 	public String goWelcomePage() {
@@ -31,18 +31,18 @@ public class ActorController {
 	}
 	
 	@RequestMapping("/registrar")
-	public String register(@ModelAttribute("actor") Actor objActor, BindingResult binRes, Model model) 
+	public String register(@ModelAttribute("reaction") Reaction objReaction, BindingResult binRes, Model model) 
 		throws ParseException
 	{
 		if (binRes.hasErrors())
-			return "actor";
+			return "reaction";
 		else {
-			boolean flag = aService.save(objActor);
+			boolean flag = rService.save(objReaction);
 			if(flag)
-				return "redirect:/actor/listar";
+				return "redirect:/reaccion/listar";
 			else {
 				model.addAttribute("mensaje", "Ocurrio un rochezaso, LUZ ROJA");
-				return "redirect:/actor/irRegistrar";
+				return "redirect:/reaccion/irRegistrar";
 			}
 		}
 	}
@@ -51,16 +51,16 @@ public class ActorController {
 	public String modify(@PathVariable int id, Model model, RedirectAttributes objRedir) 
 		throws ParseException
 	{
-		Optional<Actor> objActor = aService.findById(id);
-		if (objActor == null) {
+		Optional<Reaction> objReaction = rService.findById(id);
+		if (objReaction == null) {
 			objRedir.addFlashAttribute("mensaje", "Ocurrio un roche, LUZ ROJA");
-			return "redirect:/actor/listar";
+			return "redirect:/reaccion/listar";
 		}
 		else {
-			model.addAttribute("actor", objActor);
-			model.addAttribute("actorbusqueda", new Actor());
-			model.addAttribute("listActors",aService.findAllSortIdAsc());
-			return "listActor";                   
+			model.addAttribute("reaction", objReaction);
+			model.addAttribute("reactionbusqueda", new Reaction());
+			model.addAttribute("listReactions",rService.findAll());
+			return "listReaction";                   
 		}
 	}
 	
@@ -68,39 +68,39 @@ public class ActorController {
 	public String delete(Map<String, Object> model, @RequestParam(value="id") Integer id) {
 		try {
 			if(id!=null && id>0) {
-				aService.delete(id);
-				model.put("actor",new Actor()); //importante
-				model.put("actorbusqueda", new Actor()); //importante
-				model.put("listActors", aService.findAllSortIdAsc());
+				rService.delete(id);
+				model.put("reaction",new Reaction()); //importante
+				model.put("reactionbusqueda", new Reaction()); //importante
+				model.put("listReactions", rService.findAll());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-			model.put("listActors", aService.findAllSortIdAsc());
-			model.put("actor", new Actor());
-			model.put("actorbusqueda", new Actor());
+			model.put("listActors", rService.findAll());
+			model.put("actor", new Reaction());
+			model.put("actorbusqueda", new Reaction());
 		}
-		return "listActor";
+		return "listReaction";
 	}
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
-		model.put("listActors", aService.findAllSortIdAsc());
-		model.put("actor",new Actor());
-		model.put("actorbusqueda", new Actor()); 
-		return "listActor";
+		model.put("listReactions", rService.findAll());
+		model.put("reaction",new Reaction());
+		model.put("reactionbusqueda", new Reaction()); 
+		return "listReaction";
 	}
 	
 	@RequestMapping("/buscar")
-	public String buscar(Map<String, Object> model,@ModelAttribute("actorbusqueda") Actor actor) 
+	public String buscar(Map<String, Object> model,@ModelAttribute("reactionbusqueda") Reaction reaction) 
 		throws ParseException
 	{
-		List<Actor>listActors;
-		listActors = aService.findByName(actor.getNameActor());
+		List<Reaction>listReactions;
+		listReactions = rService.findByName(reaction.getNameReaction());
 		
-		model.put("actor", new Actor());
-		model.put("listActors", listActors);
+		model.put("reaction", new Reaction());
+		model.put("listReactions", listReactions);
 		
-		return "listActor";
+		return "listReaction";
 	}
 }

@@ -36,13 +36,13 @@ public class DirectorServiceImpl implements IDirectorService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Director> findAll() {
-		return dDirector.findAll();
+	public List<Director> findAllSortNameAsc() {
+		return dDirector.findAll(Sort.by(Sort.Direction.ASC,"nameDirector"));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Director> findAllSortAsc() {
+	public List<Director> findAllSortIdAsc() {
 		return dDirector.findAll(Sort.by(Sort.Direction.ASC,"idDirector"));
 	}
 	

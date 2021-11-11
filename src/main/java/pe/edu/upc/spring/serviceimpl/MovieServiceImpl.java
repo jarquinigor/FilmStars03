@@ -36,13 +36,13 @@ public class MovieServiceImpl implements IMovieService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Movie> findAll() {
-		return dMovie.findAll();
+	public List<Movie> findAllSortNameAsc() {
+		return dMovie.findAll(Sort.by(Sort.Direction.ASC,"nameMovie"));
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Movie> findAllSortAsc() {
+	public List<Movie> findAllSortIdAsc() {
 		return dMovie.findAll(Sort.by(Sort.Direction.ASC,"idMovie"));
 	}
 	

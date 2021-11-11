@@ -36,13 +36,13 @@ public class ActorServiceImpl implements IActorService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Actor> findAll() {
-		return dActor.findAll();
+	public List<Actor> findAllSortNameAsc() {
+		return dActor.findAll(Sort.by(Sort.Direction.ASC,"nameActor"));//AGREGADO
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Actor> findAllSortAsc() {
+	public List<Actor> findAllSortIdAsc() {
 		return dActor.findAll(Sort.by(Sort.Direction.ASC,"idActor"));
 	}
 	

@@ -11,9 +11,12 @@ import pe.edu.upc.spring.model.CriticReview;
 
 @Repository
 public interface ICriticReviewRepository extends JpaRepository<CriticReview, Integer> {
-	@Query("from CriticReview cr where cr.critic.nameCritic like %:nameCritic% order by cr.idCriticReview ASC")
+	@Query("from CriticReview cr where LOWER(cr.critic.nameCritic) like LOWER(concat('%',:nameCritic,'%')) order by cr.idCriticReview ASC")
 	List<CriticReview> findByCriticName(@Param("nameCritic") String nameCritic);
-	
-	@Query("from CriticReview cr where cr.movie.nameMovie like %:nameMovie% order by cr.idCriticReview ASC")
+
+	@Query("from CriticReview cr where LOWER(cr.movie.nameMovie) like LOWER(concat('%',:nameMovie,'%')) order by cr.idCriticReview ASC")
 	List<CriticReview> findByMovieName(@Param("nameMovie") String nameMovie);
+	
+	@Query("from CriticReview cr where cr.movie.idMovie = :idMovie order by cr.idCriticReview DESC")
+	List<CriticReview> findByMovieId(@Param("idMovie") int idMovie);
 }
