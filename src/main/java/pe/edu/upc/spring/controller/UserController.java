@@ -67,7 +67,11 @@ public class UserController {
 					return "redirect:/usuario/bienvenidoAdmin";
 				}
 				else {
+
 					session.setAttribute("userlogged",user);
+
+					session.setAttribute("userlogged",uService.findByEmail(objUser.getEmailUser()).get(0));
+
 					return "redirect:/usuario/bienvenidoUsuario";
 				}
 			}

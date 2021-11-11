@@ -1,6 +1,9 @@
 package pe.edu.upc.spring.controller;
 
+
 import java.util.ArrayList;
+
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sun.el.parser.ParseException;
 
+
 import pe.edu.upc.spring.model.Actor;
 import pe.edu.upc.spring.model.Genre;
 import pe.edu.upc.spring.model.Movie;
@@ -30,6 +34,11 @@ import pe.edu.upc.spring.service.IMovieGenreService;
 import pe.edu.upc.spring.service.IMovieService;
 import pe.edu.upc.spring.service.IUserReviewService;
 
+import pe.edu.upc.spring.model.Movie;
+import pe.edu.upc.spring.service.IDirectorService;
+import pe.edu.upc.spring.service.IMovieService;
+
+
 @Controller
 @RequestMapping("/pelicula")
 public class MovieController {
@@ -39,6 +48,7 @@ public class MovieController {
 	@Autowired
 	private IDirectorService dService;
 	
+
 	//Para listar géneros y actores
 	@Autowired
 	private IGenreService gService;
@@ -53,6 +63,7 @@ public class MovieController {
 	@Autowired
 	private ICriticReviewService crService;
 	
+
 	@RequestMapping("/bienvenido")
 	public String goWelcomePage() {
 		return "welcome"; 
@@ -86,8 +97,13 @@ public class MovieController {
 		}
 		else {
 			model.addAttribute("moviebusqueda", new Movie());
+
 			model.addAttribute("listDirectors",dService.findAllSortIdAsc());
 			model.addAttribute("listMovies",mService.findAllSortIdAsc());
+
+			model.addAttribute("listDirectors",dService.findAllSortAsc());
+			model.addAttribute("listMovies",mService.findAllSortAsc());
+
 			if(objMovie.isPresent())
 				objMovie.ifPresent(o -> model.addAttribute("movie",o));
 			
@@ -102,24 +118,38 @@ public class MovieController {
 				mService.delete(id);
 				model.put("movie",new Movie()); //importante
 				model.put("moviebusqueda", new Movie()); //importante
+
 				model.put("listDirectors",dService.findAllSortIdAsc());
 				model.put("listMovies", mService.findAllSortIdAsc());
+
+				model.put("listDirectors",dService.findAllSortAsc());
+				model.put("listMovies", mService.findAllSortAsc());
+
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
+
 			model.put("movie",new Movie()); //importante
 			model.put("moviebusqueda", new Movie()); //importante
 			model.put("listDirectors",dService.findAllSortIdAsc());
 			model.put("listMovies", mService.findAllSortIdAsc());
+
+			model.put("listMovies", mService.findAll());
+
 		}
 		return "listMovie";
 	}
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
+
 		model.put("listDirectors",dService.findAllSortIdAsc());
 		model.put("listMovies", mService.findAllSortIdAsc());
+
+		model.put("listDirectors",dService.findAllSortAsc());
+		model.put("listMovies", mService.findAllSortAsc());
+
 		model.put("movie",new Movie());
 		model.put("moviebusqueda", new Movie()); 
 		return "listMovie";
@@ -133,11 +163,16 @@ public class MovieController {
 		listMovies = mService.findByName(movie.getNameMovie());
 		
 		model.put("movie", new Movie());
+
 		model.put("listDirectors",dService.findAllSortIdAsc());
+
+		model.put("listDirectors",dService.findAllSortAsc());
+
 		model.put("listMovies", listMovies);
 		
 		return "listMovie";
 	}
+
 	
 	@RequestMapping("/verPeliculas")
 	public String moviesUser(Model model) {
@@ -186,4 +221,5 @@ public class MovieController {
 
 		return "movieUser";
 	}
+
 }

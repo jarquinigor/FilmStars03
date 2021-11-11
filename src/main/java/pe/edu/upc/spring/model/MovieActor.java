@@ -2,7 +2,9 @@ package pe.edu.upc.spring.model;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,20 +30,28 @@ public class MovieActor implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idActor", nullable = false)
 	private Actor actor;
+
 	
 	@Column(name="nameCharacter", nullable = false, length=60)
 	private String nameCharacter;
+
 
 	public MovieActor() {
 		super();
 	}
 
+
 	public MovieActor(int idMovieActor, Movie movie, Actor actor, String nameCharacter) {
+
+	public MovieActor(int idMovieActor, Movie movie, Actor actor) {
+
 		super();
 		this.idMovieActor = idMovieActor;
 		this.movie = movie;
 		this.actor = actor;
+
 		this.nameCharacter = nameCharacter;
+
 	}
 
 	public int getIdMovieActor() {
@@ -68,6 +78,7 @@ public class MovieActor implements Serializable {
 		this.actor = actor;
 	}
 
+
 	public String getNameCharacter() {
 		return nameCharacter;
 	}
@@ -75,4 +86,5 @@ public class MovieActor implements Serializable {
 	public void setNameCharacter(String nameCharacter) {
 		this.nameCharacter = nameCharacter;
 	}
+
 }

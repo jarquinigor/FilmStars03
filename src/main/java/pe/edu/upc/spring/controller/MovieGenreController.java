@@ -1,6 +1,8 @@
 package pe.edu.upc.spring.controller;
 
+
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,7 +19,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sun.el.parser.ParseException;
 
+
 import pe.edu.upc.spring.model.Movie;
+
+
 import pe.edu.upc.spring.model.MovieGenre;
 import pe.edu.upc.spring.service.IMovieService;
 import pe.edu.upc.spring.service.IGenreService;
@@ -68,9 +73,15 @@ public class MovieGenreController {
 		}
 		else {
 			model.addAttribute("movieGenrebusqueda", new MovieGenre());
+
 			model.addAttribute("listMovies",mService.findAllSortNameAsc());
 			model.addAttribute("listGenres",gService.findAllSortNameAsc());
 			model.addAttribute("listMovieGenres", mgService.findAllSortIdAsc());
+
+			model.addAttribute("listMovies",mService.findAllSortAsc());
+			model.addAttribute("listGenres",gService.findAllSortAsc());
+			model.addAttribute("listMovieGenres", mgService.findAllSortAsc());
+
 			if(objMovieGenre.isPresent())
 				objMovieGenre.ifPresent(o -> model.addAttribute("movieGenre",o));
 			
@@ -85,18 +96,28 @@ public class MovieGenreController {
 				mgService.delete(id);
 				model.put("movieGenre",new MovieGenre()); //importante
 				model.put("movieGenrebusqueda", new MovieGenre()); //importante
+
 				model.put("listMovies",mService.findAllSortNameAsc());
 				model.put("listGenres",gService.findAllSortNameAsc());
 				model.put("listMovieGenres", mgService.findAllSortIdAsc());
+
+				model.put("listMovies",mService.findAllSortAsc());
+				model.put("listGenres",gService.findAllSortAsc());
+				model.put("listMovieGenres", mgService.findAllSortAsc());
+
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
+
 			model.put("movieGenre",new MovieGenre()); //importante
 			model.put("movieGenrebusqueda", new MovieGenre()); //importante
 			model.put("listMovies",mService.findAllSortNameAsc());
 			model.put("listGenres",gService.findAllSortNameAsc());
 			model.put("listMovieGenres", mgService.findAllSortIdAsc());
+
+			model.put("listMovies", mService.findAll());
+
 		}
 		return "listMovieGenre";
 	}
@@ -105,9 +126,15 @@ public class MovieGenreController {
 	public String list(Map<String, Object> model) {
 		model.put("movieGenre",new MovieGenre());
 		model.put("movieGenrebusqueda", new MovieGenre());
+
 		model.put("listMovies",mService.findAllSortNameAsc());
 		model.put("listGenres",gService.findAllSortNameAsc());
 		model.put("listMovieGenres", mgService.findAllSortIdAsc());
+
+		model.put("listMovies",mService.findAllSortAsc());
+		model.put("listGenres",gService.findAllSortAsc());
+		model.put("listMovieGenres", mgService.findAllSortAsc());
+
 		return "listMovieGenre";
 	}
 	
@@ -122,12 +149,18 @@ public class MovieGenreController {
 			listMovieGenres = mgService.findByGenreName(movieGenre.getMovie().getNameMovie());
 		}
 		model.put("movieGenre", new MovieGenre());
+
 		model.put("listMovies",mService.findAllSortNameAsc());
 		model.put("listGenres",gService.findAllSortNameAsc());
+
+		model.put("listMovies",mService.findAllSortAsc());
+		model.put("listGenres",gService.findAllSortAsc());
+
 		model.put("listMovieGenres", listMovieGenres);
 		
 		return "listMovieGenre";
 	}
+
 	
 	@RequestMapping("/verPeliculas")
 	public String verPeliculaGenero(Model model, @RequestParam(value="id") Integer id) {
@@ -142,4 +175,6 @@ public class MovieGenreController {
 		model.addAttribute("listGenres",gService.findAllSortNameAsc());
 		return "moviesUser";
 	}
+
+
 }

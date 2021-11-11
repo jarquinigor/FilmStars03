@@ -11,6 +11,7 @@ import pe.edu.upc.spring.model.MovieActor;
 
 @Repository
 public interface IMovieActorRepository extends JpaRepository<MovieActor, Integer> {
+
 	@Query("from MovieActor ma where LOWER(ma.movie.nameMovie) like LOWER(concat('%',:nameMovie,'%')) order by ma.idMovieActor ASC")
 	List<MovieActor> findByMovieName(@Param("nameMovie") String nameMovie);
 	
@@ -19,4 +20,10 @@ public interface IMovieActorRepository extends JpaRepository<MovieActor, Integer
 	
 	@Query("from MovieActor ma where ma.movie.idMovie = :idMovie order by ma.idMovieActor ASC")
 	List<MovieActor> findByMovieId(@Param("idMovie") int idMovie);
+
+	@Query("from MovieActor ma where ma.movie.nameMovie like %:nameMovie% order by ma.idMovieActor ASC")
+	List<MovieActor> findByMovieName(@Param("nameMovie") String nameMovie);
+	
+	@Query("from MovieActor ma where ma.actor.nameActor like %:nameActor% order by ma.idMovieActor ASC")
+	List<MovieActor> findByActorName(@Param("nameActor") String nameActor);
 }
