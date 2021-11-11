@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta charset="utf-8" />
-<title>Noticias</title>
+<title>Reacciones</title>
 <meta name="generator" content="Bootply" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -66,105 +67,94 @@ body {
 	}
 }
 </style>
+
 </head>
 
 <body style="background-color: rgba(34, 34, 34, 1); color: white;">
 	<div th:replace="fragments/headerAdmin :: header"></div>
 	<div class="container">
 
-		<form th:action="@{/noticia/registrar}" method="post"
-			th:object="${news}">
+		<form th:action="@{/reaccion/registrar}" method="post"
+			th:object="${reaction}">
 			<div class="form-group">
-				<label for="id">ID:</label> <input type="text" class="form-control"
-					th:field="*{idNews}" readonly></input>
+				<label for="idpet">ID:</label> <input type="text"
+					class="form-control" th:field="*{idReaction}" readonly></input>
+
 				<div class="form-group">
-					<label for="titulo">TÍTULO: </label> <input type="text"
-						class="form-control" th:field="*{titleNews}" id="titulo"></input>
+					<label for="nombre">NOMBRE:</label> <input type="text"
+						class="form-control" th:field="*{nameReaction}" id="nombre"></input>
 
 					<div class="alert alert-danger"
-						th:if="${#fields.hasErrors('titleNews')}" th:errors="*{titleNews}">
+						th:if="${#fields.hasErrors('nameReaction')}" th:errors="*{nameReaction}">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="subtitulo">SUBTÍTULO: </label> <input type="text"
-						class="form-control" th:field="*{subtitleNews}" id="subtitulo"></input>
+					<label for="nombre">IMAGEN LIKE</label> <input type="text"
+						class="form-control" th:field="*{imgLikeReaction}" id="fechaNacimiento"></input>
 
 					<div class="alert alert-danger"
-						th:if="${#fields.hasErrors('subtitleNews')}"
-						th:errors="*{subtitleNews}"></div>
-				</div>
-
-				<div class="form-group">
-					<label for="texto">TEXTO: </label> <textarea type="text"
-						class="form-control" th:field="*{textNews}" id="texto"></textarea>
-
-					<div class="alert alert-danger"
-						th:if="${#fields.hasErrors('textNews')}" th:errors="*{textNews}">
+						th:if="${#fields.hasErrors('imgLikeReaction')}" th:errors="*{imgLikeReaction}">
 					</div>
 				</div>
-
+				
 				<div class="form-group">
-					<label for="imagen">IMAGEN: </label> <input type="text"
-						class="form-control" th:field="*{imgNews}" id="imagen"></input>
+					<label for="nombre">IMAGEN DISLIKE</label> <input type="text"
+						class="form-control" th:field="*{imgDislikeReaction}" id="fechaNacimiento"></input>
 
 					<div class="alert alert-danger"
-						th:if="${#fields.hasErrors('imgNews')}" th:errors="*{imgNews}">
+						th:if="${#fields.hasErrors('imgDislikeReaction')}" th:errors="*{imgDislikeReaction}">
 					</div>
 				</div>
-
-
+				
 			</div>
-
 			<button type="submit" class="btn btn-success">
 				<span class="bi bi-plus-circle"></span> Grabar
 			</button>
+
 		</form>
 
 		<br>
 
-		<form id="myform" th:action="@{/noticia/buscar}"
-			th:object="${newsbusqueda}">
+
+		<form id="myform" th:action="@{/reaccion/buscar}"
+			th:object="${reactionbusqueda}">
 			<div class="row clearfix">
 				<div class="col-md-12 column">
 
-					<input type="text" class="form-control" th:field="*{titleNews}"
-						placeholder="Ingrese el título de una noticia para buscar"
-						id="titulo"/>
+					<input type="text" class="form-control" th:field="*{nameReaction}"
+						placeholder="Ingrese un nombre una reacción para buscar" id="nombre" />
 					<br>
 					<div align="left">
 						<button type="submit" class="btn btn-primary"><span class="bi bi-search"></span> Buscar</button>
-						<a th:href="@{/noticia/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
+						<a th:href="@{/reaccion/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
 					</div>
 					<br>
-					<table class="table table-dark table-bordered table-hover table-striped"
+					<table
+						class="table table-dark table-bordered table-hover table-striped"
 						style="color: white; background-color: transparent" id="tab_logic">
 						<thead>
 							<tr>
-								<th class="text-center">CÓDIGO</th>
-								<th class="text-center">TÍTULO</th>
-								<th class="text-center">SUBTÍTULO</th>
-								<th class="text-center">TEXTO</th>
-								<th class="text-center">IMAGEN</th>
-								<th class="text-center">FECHA</th>
-								<th class="text-center">OPERACIÓN</th>
-								<th class="text-center">OPERACIÓN</th>
+								<th class="text-center">CODIGO</th>
+								<th class="text-center">REACCIÓN</th>
+								<th class="text-center">IMAGEN LIKE</th>
+								<th class="text-center">IMAGEN DISLIKE</th>
+								<th class="text-center">OPERACION</th>
+								<th class="text-center">OPERACION</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="n: ${listNews}">
-								<td align="center" th:text="${n.idNews}"></td>
-								<td align="center" th:text="${n.titleNews}"></td>
-								<td align="center" th:text="${n.subtitleNews}"></td>
-								<td align="center" th:text="${n.textNews}"></td>
-								<td align="center"><img th:src="${n.imgNews}" width="50"
-									height="50" alt="logo" align="middle"></img></td>
-								<td align="center"
-									th:text="${#dates.format(n.dateNews, 'dd/MM/yyyy HH:mm:ss')}"></td>
+							<tr th:each="r: ${listReactions}">
+								<td align="center" th:text="${r.idReaction}"></td>
+								<td align="center" th:text="${r.nameReaction}"></td>
+								<td align="center"><img th:src="${r.imgLikeReaction}" width="50"
+									alt="logo" align="middle"></img></td>
+								<td align="center"><img th:src="${r.imgDislikeReaction}" width="50"
+									alt="logo" align="middle"></img></td>
 								<td align="center"><a class="btn btn-danger"
-									th:href="@{/noticia/eliminar?id=}+${n.idNews}"><span class="bi bi-trash"></span> Eliminar</a></td>
+									th:href="@{/reaccion/eliminar?id=}+${r.idReaction}"><span class="bi bi-trash"></span> Eliminar</a></td>
 								<td align="center"><a class="btn btn-warning"
-									th:href="@{'/noticia/modificar/'}+${n.idNews}"><span class="bi bi-pen"></span> Modificar</a></td>
+									th:href="@{'/reaccion/modificar/'}+${r.idReaction}"><span class="bi bi-pen"></span> Modificar</a></td>
 							</tr>
 						</tbody>
 					</table>

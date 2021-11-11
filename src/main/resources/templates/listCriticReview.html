@@ -29,6 +29,7 @@
 
 <link href='https://fonts.googleapis.com/css?family=Be Vietnam'
 	rel='stylesheet' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
 <style>
 body {
@@ -94,8 +95,17 @@ body {
 							th:text="${m.nameMovie}"
 							th:selected="(${m.idMovie} == *{movie.idMovie})"></option>
 					</select>
-				</div>
+				</div>	
+				
+				<div class="form-group">
+   					<label for="nombre">FECHA</label>
+   					<input type="date" class="form-control" th:field="*{dateCriticReview}" id="fecha"></input>
 
+					<div class="alert alert-danger" th:if="${#fields.hasErrors('dateCriticReview')}" 
+						th:errors="*{dateCriticReview}">
+					</div>	
+    			</div>
+				
 				<div class="form-group">
 					<label for="nombre">REVIEW:</label> <input type="text"
 						class="form-control" th:field="*{textCriticReview}" id="review"></input>
@@ -103,10 +113,36 @@ body {
 						th:if="${#fields.hasErrors('textCriticReview')}"
 						th:errors="*{textCriticReview}"></div>
 				</div>
+				
+				<div class="form-group">
+					<label for="nombre">RATE</label>
+					<select class="form-control" th:field="*{quantityCriticReview}">
+						<option th:value="1" th:text="1"
+							th:selected="1 == *{quantityCriticReview}"></option>
+						<option th:value="2" th:text="2"
+							th:selected="2 == *{quantityCriticReview}"></option>
+						<option th:value="3" th:text="3"
+							th:selected="3 == *{quantityCriticReview}"></option>
+						<option th:value="4" th:text="4"
+							th:selected="4 == *{quantityCriticReview}"></option>
+						<option th:value="5" th:text="5"
+							th:selected="5 == *{quantityCriticReview}"></option>
+						<option th:value="6" th:text="6"
+							th:selected="6 == *{quantityCriticReview}"></option>
+						<option th:value="7" th:text="7"
+							th:selected="7 == *{quantityCriticReview}"></option>
+						<option th:value="8" th:text="8"
+							th:selected="8 == *{quantityCriticReview}"></option>
+						<option th:value="9" th:text="9"
+							th:selected="9 == *{quantityCriticReview}"></option>
+						<option th:value="10" th:text="10"
+							th:selected="10 == *{quantityCriticReview}"></option>
+					</select>
+				</div>
 
 			</div>
-			<button type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus"></span> Grabar
+			<button type="submit" class="btn btn-success">
+				<span class="bi bi-plus-circle"></span> Grabar
 			</button>
 
 		</form>
@@ -125,8 +161,8 @@ body {
 						id="nombre"/>
 					<br>
 					<div align="left">
-						<button type="submit" class="btn btn-danger">Buscar</button>
-						<a th:href="@{/textoCritica/listar}" class="btn btn-primary">Limpiar</a>
+						<button type="submit" class="btn btn-primary"><span class="bi bi-search"></span> Buscar</button>
+						<a th:href="@{/textoCritica/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
 					</div>
 					<br>
 					<table class="table table-dark table-bordered table-hover table-striped"
@@ -136,7 +172,9 @@ body {
 								<th class="text-center">CODIGO</th>
 								<th class="text-center">CRITICO</th>
 								<th class="text-center">PELICULA</th>
+								<th class="text-center">FECHA</th>
 								<th class="text-center">REVIEW</th>
+								<th class="text-center">RATE</th>
 								<th class="text-center">OPERACION</th>
 								<th class="text-center">OPERACION</th>
 							</tr>
@@ -146,11 +184,13 @@ body {
 								<td align="center" th:text="${cr.idCriticReview}"></td>
 								<td align="center" th:text="${cr.critic.nameCritic}"></td>
 								<td align="center" th:text="${cr.movie.nameMovie}"></td>
+								<td align="center" th:text="${#dates.format(cr.dateCriticReview,'dd/MM/yyyy')}"></td> 
 								<td align="center" th:text="${cr.textCriticReview}"></td>
-								<td align="center"><a
-									th:href="@{/textoCritica/eliminar?id=}+${cr.idCriticReview}">Eliminar</a></td>
-								<td align="center"><a
-									th:href="@{'/textoCritica/modificar/'}+${cr.idCriticReview}">Modificar</a></td>
+								<td align="center" th:text="${cr.quantityCriticReview}"></td>
+								<td align="center"><a class="btn btn-danger"
+									th:href="@{/textoCritica/eliminar?id=}+${cr.idCriticReview}"><span class="bi bi-trash"></span> Eliminar</a></td>
+								<td align="center"><a class="btn btn-warning"
+									th:href="@{'/textoCritica/modificar/'}+${cr.idCriticReview}"><span class="bi bi-pen"></span> Modificar</a></td>
 							</tr>
 						</tbody>
 					</table>

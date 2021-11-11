@@ -40,43 +40,7 @@ body, html {
 
 <body style="background-color: rgba(34, 34, 34, 1); color: white;">
 
-	<div class="container">
-		<nav class="navbar navbar-expand-lg navbar-dark"
-			style="margin-bottom: 0px; margin-top: 10px;">
-
-			<a class="navbar-brand" th:href="@{/usuario/bienvenido}"
-				style="display: table; margin: 7px; padding-top: 5px; padding-bottom: 5px;">
-				<img th:src="@{/img/filmstars.png}" alt="" height="60" />
-			</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-				<form class="form-inline">
-					<input class="form-control mr-sm-2" type="search"
-						placeholder="Buscar" aria-label="Search" />
-					<button class="disabled btn btn-outline-success"
-						disabled="disabled">Buscar</button>
-				</form>
-
-				<ul class="navbar-nav ml-auto w-auto justify-content-end"
-					style="font-size: 0.92rem;">
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/usuario/bienvenido}" style="color: white;">INICIO</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: white;">PELÍCULAS</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: white;">FILMSPACE</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						style="color: white;">NOTICIAS</a></li>
-				</ul>
-			</div>
-		</nav>
-	</div>
+	<div th:replace="fragments/header :: header"></div>
 	<br>
 	<br>
 	<br>
