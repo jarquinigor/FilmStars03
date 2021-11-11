@@ -59,7 +59,7 @@ public class DirectorController {
 		else {
 			model.addAttribute("director", objDirector);
 			model.addAttribute("directorbusqueda", new Director());
-			model.addAttribute("listDirectos", dService.findAllSortAsc());
+			model.addAttribute("listDirectors", dService.findAllSortIdAsc());
 			return "listDirector";
 		}
 	}
@@ -71,12 +71,14 @@ public class DirectorController {
 				dService.delete(id);
 				model.put("director",new Director());
 				model.put("directorbusqueda", new Director());
-				model.put("listDirectors", dService.findAllSortAsc());
+				model.put("listDirectors", dService.findAllSortIdAsc());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-			model.put("listDirectors", dService.findAll());
+			model.put("director",new Director());
+			model.put("directorbusqueda", new Director());
+			model.put("listDirectors", dService.findAllSortIdAsc());
 		}
 		
 		return "listDirector";
@@ -84,7 +86,7 @@ public class DirectorController {
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
-		model.put("listDirectors", dService.findAllSortAsc());
+		model.put("listDirectors", dService.findAllSortIdAsc());
 		model.put("director",new Director());
 		model.put("directorbusqueda", new Director());
 		

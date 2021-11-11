@@ -11,6 +11,6 @@ import pe.edu.upc.spring.model.Critic;
 
 @Repository
 public interface ICriticRepository extends JpaRepository<Critic, Integer> {
-	@Query("from Critic c where c.nameCritic like %:nameCritic% order by c.idCritic ASC")
+	@Query("from Critic c where LOWER(c.nameCritic) like LOWER(concat('%',:nameCritic,'%')) order by c.idCritic ASC")
 	List<Critic> findByName(@Param("nameCritic") String nameCritic);
 }
