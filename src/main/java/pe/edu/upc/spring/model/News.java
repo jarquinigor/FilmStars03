@@ -24,6 +24,15 @@ public class News implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idNews;
 
+
+	@Column(name="titleNews", nullable=false, length=100)
+	private String titleNews;
+	
+	@Column(name="subtitleNews", nullable=false, length=200)
+	private String subtitleNews;
+	
+	@Column(name="textNews", nullable=false, length=1200) //800
+
 	@Column(name="titleNews", nullable=false, length=80)
 	private String titleNews;
 	
@@ -31,6 +40,7 @@ public class News implements Serializable {
 	private String subtitleNews;
 	
 	@Column(name="textNews", nullable=false, length=800)
+
 	private String textNews;
 	
 	@Column(name="imgNews", nullable=false, length=200)
@@ -38,7 +48,11 @@ public class News implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dateNews")
+
+	@DateTimeFormat(pattern="d MMM, yyyy") 
+
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+
 	private Date dateNews;
 
 	public News() {

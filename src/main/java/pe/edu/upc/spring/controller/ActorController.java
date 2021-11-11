@@ -30,18 +30,6 @@ public class ActorController {
 		return "welcome"; 
 	}
 	
-	@RequestMapping("/") //NO LO USAMOS
-	public String goActorsListPage(Map<String, Object> model) {
-		model.put("listActors", aService.findAll());
-		return "listActor"; 
-	}
-	
-	@RequestMapping("/irRegistrar") //NO LO USAMOS
-	public String goRegisterPage(Model model) { 
-		model.addAttribute("actor", new Actor()); 
-		return "actor"; 
-	}
-	
 	@RequestMapping("/registrar")
 	public String register(@ModelAttribute("actor") Actor objActor, BindingResult binRes, Model model) 
 		throws ParseException
@@ -71,7 +59,7 @@ public class ActorController {
 		else {
 			model.addAttribute("actor", objActor);
 			model.addAttribute("actorbusqueda", new Actor());
-			model.addAttribute("listActors",aService.findAllSortAsc());
+			model.addAttribute("listActors",aService.findAllSortIdAsc());
 			return "listActor";                   
 		}
 	}
@@ -83,12 +71,12 @@ public class ActorController {
 				aService.delete(id);
 				model.put("actor",new Actor()); //importante
 				model.put("actorbusqueda", new Actor()); //importante
-				model.put("listActors", aService.findAllSortAsc());
+				model.put("listActors", aService.findAllSortIdAsc());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-			model.put("listActors", aService.findAll());
+			model.put("listActors", aService.findAllSortIdAsc());
 			model.put("actor", new Actor());
 			model.put("actorbusqueda", new Actor());
 		}
@@ -97,7 +85,7 @@ public class ActorController {
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
-		model.put("listActors", aService.findAllSortAsc());
+		model.put("listActors", aService.findAllSortIdAsc());
 		model.put("actor",new Actor());
 		model.put("actorbusqueda", new Actor()); 
 		return "listActor";
