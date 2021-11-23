@@ -2,7 +2,6 @@ package pe.edu.upc.spring.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +22,7 @@ public class UserNewsComment implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "idUser", nullable = false)
-	private User user;
+	private Users user;
 	
 	@ManyToOne
 	@JoinColumn(name = "idNewsComment", nullable = false)
@@ -37,7 +36,7 @@ public class UserNewsComment implements Serializable {
 		super();
 	}
 
-	public UserNewsComment(int idUserNewsComment, User user, NewsComment newsComment, Reaction reaction) {
+	public UserNewsComment(int idUserNewsComment, Users user, NewsComment newsComment, Reaction reaction) {
 		super();
 		this.idUserNewsComment = idUserNewsComment;
 		this.user = user;
@@ -53,11 +52,11 @@ public class UserNewsComment implements Serializable {
 		this.idUserNewsComment = idUserNewsComment;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

@@ -3,6 +3,8 @@ package pe.edu.upc.spring.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.repository.query.Param;
+
 import pe.edu.upc.spring.model.UserReview;
 
 public interface IUserReviewService {
@@ -15,4 +17,5 @@ public interface IUserReviewService {
 	public List<UserReview> findByMovieId(int idMovie);
 	public String findFilmstarsRate(int idMovie);
 	public List<UserReview> findByMovieUserId(int idMovie, int idUser);
+	public UserReview findByURId(int idUserReview);
 }

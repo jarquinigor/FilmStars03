@@ -32,6 +32,13 @@ public class UserNewsCommentServiceImpl implements IUserNewsCommentService {
 	@Transactional
 	public void delete(int idUserNewsComment) {
 		dUserNewsComment.deleteById(idUserNewsComment);
+		
+	}
+	
+	@Override
+	@Transactional
+	public void deleteBatch(int idNewsComment) {
+		dUserNewsComment.deleteInBatch(dUserNewsComment.findAllByNewsCommentId(idNewsComment));
 	}
 	
 	@Override
@@ -64,12 +71,6 @@ public class UserNewsCommentServiceImpl implements IUserNewsCommentService {
 		return dUserNewsComment.identifyCommentNonAuthor(idUser, idNewsComment);
 	}
 	
-	/*@Override
-	@Transactional(readOnly = true)
-	public int calculateValuation(int idNewsComment) {
-		return dUserNewsComment.countLikes(idNewsComment) - dUserNewsComment.countDislikes(idNewsComment);
-	}*/
-	
 	@Override
 	@Transactional(readOnly = true)
 	public List<UserNewsComment>findAllByUserAndNewsId(int idUser, int idNews){
@@ -80,5 +81,11 @@ public class UserNewsCommentServiceImpl implements IUserNewsCommentService {
 	@Transactional(readOnly = true)
 	public List<UserNewsComment>findRow(int idUser, int idNewsComment){
 		return dUserNewsComment.findRow(idUser, idNewsComment);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public UserNewsComment findByUNCId(int idUserNewsComment) {
+		return dUserNewsComment.findByUNCId(idUserNewsComment);
 	}
 }

@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sun.el.parser.ParseException;
 
 import pe.edu.upc.spring.model.Movie;
-import pe.edu.upc.spring.model.User;
+import pe.edu.upc.spring.model.Users;
 import pe.edu.upc.spring.model.UserReview;
 import pe.edu.upc.spring.service.IMovieService;
 import pe.edu.upc.spring.service.IUserReviewService;
@@ -32,11 +32,6 @@ public class UserReviewController {
 	private IUserService uService;
 	@Autowired
 	private IMovieService mService;
-
-	@RequestMapping("/bienvenido")
-	public String goWelcomePage() {
-		return "welcome";
-	}
 	
 	@RequestMapping("/reviews")
 	public String goMovieUserReviewPage(Model model, @RequestParam(value="idMovie") Integer idMovie) {
@@ -53,6 +48,35 @@ public class UserReviewController {
 		return "movieUserReview";
 	}
 	
+	@RequestMapping("/eliminar")
+	public String goMovieUserReviewPage(Model model, @RequestParam(value="idUserReview") Integer idUserReview, 
+			@RequestParam("idUserLogged") Integer idUserLogged, RedirectAttributes redirectAttribute) {
+		
+		try {
+			UserReview userReview = urService.findByURId(idUserReview);
+			//Se elimina
+			if(userReview.getUser().getIdUser() == idUserLogged) {
+				urService.delete(idUserReview);
+			}
+			//
+			List<UserReview>objReview = urService.findByMovieId(userReview.getMovie().getIdMovie());
+			model.addAttribute("listUserReviews",objReview);
+			model.addAttribute("userReview", new UserReview());
+			
+			Optional <Movie>objMovie = mService.findById(userReview.getMovie().getIdMovie()); 
+			if(objMovie.isPresent())
+				objMovie.ifPresent(o -> model.addAttribute("movie", o));
+			
+			return "movieUserReview";
+		} catch (Exception e) {
+			redirectAttribute.addAttribute("idUserReview",idUserReview);
+			redirectAttribute.addAttribute("idUserLogged",idUserLogged);
+			return "redirect:/usuarioReview/reviews";
+		}
+		
+		
+	}
+	
 	@RequestMapping("/registrar")
 	public String register(@ModelAttribute("userReview") UserReview objUserReview,
 			@RequestParam(value = "idUser") Integer idUser, @RequestParam(value = "idMovie") Integer idMovie, BindingResult binRes,
@@ -60,46 +84,47 @@ public class UserReviewController {
 		if (binRes.hasErrors())
 			return "movieUser";
 		else {
-			//Para registrar un objeto UserReview
-			Optional<User>objUser = uService.findById(idUser);   
-			if(objUser.isPresent())
-				objUser.ifPresent(o -> objUserReview.setUser(o));
 			
-			Optional<Movie>objMovie = mService.findById(idMovie);
-			if(objMovie.isPresent())
-				objMovie.ifPresent(o -> objUserReview.setMovie(o));
-		
-			boolean flag = urService.save(objUserReview); //Se registra el objeto
-			if (flag)
-			{	
-				//Cargando el model
-				Optional <Movie>movie = mService.findById(idMovie);
-				if(movie.isPresent())
-					movie.ifPresent(o -> redirectAttributes.addAttribute("idMovie", o.getIdMovie()));
+			if(urService.findByMovieUserId(idMovie, idUser).isEmpty()) 
+			{
+				//Para registrar un objeto UserReview
+				Optional<Users>objUser = uService.findById(idUser);   
+				if(objUser.isPresent())
+					objUser.ifPresent(o -> objUserReview.setUser(o));
 				
-				model.addAttribute("listUserReviews",urService.findAllSortIdDesc());
-				model.addAttribute("userReview", new UserReview());
-				return "redirect:/usuarioReview/reviews";
-			}
-				
-			else {
-				model.addAttribute("mensaje", "Rochezaso");
-				return "redirect:/usuarioReview/reviews";
-			}
-			
-			/*
-			boolean flag = urService.save(objUserReview);
-			if (flag)
-			{	
+				Optional<Movie>objMovie = mService.findById(idMovie);
 				if(objMovie.isPresent())
-					objMovie.ifPresent(o -> redirectAttributes.addAttribute("id", o.getIdMovie()));
-				return "redirect:/usuarioReview/reviews";
-			}
+					objMovie.ifPresent(o -> objUserReview.setMovie(o));
+			
+				boolean flag = urService.save(objUserReview); //Se registra el objeto
+				if (flag)
+				{	
+					//Cargando el model
+					Optional <Movie>movie = mService.findById(idMovie);
+					if(movie.isPresent())
+						movie.ifPresent(o -> redirectAttributes.addAttribute("idMovie", o.getIdMovie()));
 				
+					return "redirect:/usuarioReview/reviews";
+				}
+					
+				else {
+					model.addAttribute("mensaje", "Rochezaso");
+					return "redirect:/usuarioReview/reviews";
+				}
+			}
 			else {
-				model.addAttribute("mensaje", "Rochezaso");
-				return "redirect:/usuarioReview/reviews";
-			}*/
+				List<UserReview>objReview = urService.findByMovieId(idMovie);
+				
+				model.addAttribute("listUserReviews",objReview); //1
+				model.addAttribute("userReview", new UserReview());//2
+				
+				Optional<Movie>objMovie = mService.findById(idMovie); 
+				if(objMovie.isPresent())
+					objMovie.ifPresent(o -> model.addAttribute("movie", o));//3
+
+				model.addAttribute("mensaje", "Ya tienes un review en esta película registrada");
+				return "movieUserReview";
+			}			
 		}
 	}
 }

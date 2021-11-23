@@ -33,16 +33,11 @@ public class CriticReview implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "idMovie", nullable = false)
 	private Movie movie;
-
 	
 	@Column(name="quantityCriticReview", nullable=false)
 	private int quantityCriticReview;
 	
 	@Column(name="textCriticReview", nullable=false, length=400)
-
-
-	@Column(name="textReview", nullable=false, length=400)
-
 	private String textCriticReview;
 	
 	@Temporal(TemporalType.DATE)

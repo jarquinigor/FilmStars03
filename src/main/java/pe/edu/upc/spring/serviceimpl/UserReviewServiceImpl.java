@@ -88,4 +88,10 @@ public class UserReviewServiceImpl implements IUserReviewService {
 	public List<UserReview> findByMovieUserId(int idMovie, int idUser){
 		return dUserReview.findByMovieUserId(idMovie, idUser);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public UserReview findByURId(int idUserReview) {
+		return dUserReview.findByURId(idUserReview);
+	}
 }

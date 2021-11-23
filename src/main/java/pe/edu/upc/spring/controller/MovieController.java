@@ -139,14 +139,14 @@ public class MovieController {
 		return "listMovie";
 	}
 	
-	@RequestMapping("/verPeliculas")
+	@RequestMapping("/verPeliculas") //USUARIO
 	public String moviesUser(Model model) {
 		model.addAttribute("listMovies", mService.findAllSortNameAsc());
 		model.addAttribute("listGenres", gService.findAllSortNameAsc());
 		return "moviesUser";
 	}
 	
-	@RequestMapping("/verPelicula")
+	@RequestMapping("/verPelicula")  //USUARIO
 	public String movieUser(Model model, @RequestParam(value="id") Integer id, @RequestParam(value="idUser") Integer idUser) {
 		//Actors y Genres
 		List<Actor>listActors = new ArrayList<Actor>();
