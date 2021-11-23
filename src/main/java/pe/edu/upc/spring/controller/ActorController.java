@@ -25,11 +25,6 @@ public class ActorController {
 	@Autowired
 	private IActorService aService;
 	
-	@RequestMapping("/bienvenido")
-	public String goWelcomePage() {
-		return "welcome"; 
-	}
-	
 	@RequestMapping("/registrar")
 	public String register(@ModelAttribute("actor") Actor objActor, BindingResult binRes, Model model) 
 		throws ParseException

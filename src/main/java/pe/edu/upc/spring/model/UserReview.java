@@ -32,7 +32,7 @@ public class UserReview implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "idUser", nullable = false)
-	private User user;
+	private Users user;
 	
 	@Column(name="quantityUserReview", nullable=false)
 	private int quantityUserReview;
@@ -50,7 +50,7 @@ public class UserReview implements Serializable {
 		dateUserReview = new Date();
 	}
 
-	public UserReview(int idUserReview, Movie movie, User user, int quantityUserReview, String textUserReview,
+	public UserReview(int idUserReview, Movie movie, Users user, int quantityUserReview, String textUserReview,
 			Date dateUserReview) {
 		super();
 		this.idUserReview = idUserReview;
@@ -77,11 +77,11 @@ public class UserReview implements Serializable {
 		this.movie = movie;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

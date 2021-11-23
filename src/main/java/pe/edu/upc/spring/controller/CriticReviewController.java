@@ -34,11 +34,6 @@ public class CriticReviewController {
 	@Autowired
 	private ICriticReviewService crService;
 	
-	@RequestMapping("/bienvenido")
-	public String goWelcomePage() {
-		return "welcome"; 
-	}
-	
 	@RequestMapping("/registrar")
 	public String register(@ModelAttribute("criticReview") CriticReview objCriticReview, BindingResult binRes, Model model) 
 		throws ParseException

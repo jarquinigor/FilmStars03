@@ -1,7 +1,6 @@
 package pe.edu.upc.spring.controller;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,11 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sun.el.parser.ParseException;
 
-import jdk.jfr.Timespan;
 import pe.edu.upc.spring.model.News;
 import pe.edu.upc.spring.model.NewsComment;
 import pe.edu.upc.spring.model.Reaction;
-import pe.edu.upc.spring.model.User;
+import pe.edu.upc.spring.model.Users;
 import pe.edu.upc.spring.model.UserNewsComment;
 import pe.edu.upc.spring.service.INewsCommentService;
 import pe.edu.upc.spring.service.INewsService;
@@ -49,11 +47,6 @@ public class NewsController {
 	private IUserService uService;
 	@Autowired
 	private INewsService mService;
-
-	@RequestMapping("/bienvenido")
-	public String goWelcomePage() {
-		return "welcome";
-	}
 
 	@RequestMapping("/registrar")
 	public String register(@ModelAttribute("news") News objNews, BindingResult binRes, Model model)
@@ -133,7 +126,6 @@ public class NewsController {
 	@RequestMapping("/verNoticia")
 	public String movieUser(Model model, @RequestParam(value = "id") Integer id,
 			@RequestParam(value = "idUser") Integer idUser) {
-
 		// 1. IDENTIFICAR SI ES DUEÑO DEL COMENTARIO (SI ES DUEÑO, NO SE REGISTRA)
 		// 2. SI NO ES DUEÑO, SE REGISTRA
 		List<NewsComment> listNewsComments = ncService.findByNewsId(id); // LISTA DE COMENTARIOS DE UNA NOTICIA
@@ -154,7 +146,7 @@ public class NewsController {
 					if (objReaction.isPresent())
 						objReaction.ifPresent(o -> objUserNewsComment.setReaction(o));//2
 
-					Optional<User> objUser = uService.findById(idUser);
+					Optional<Users> objUser = uService.findById(idUser);
 					if (objUser.isPresent())
 						objUser.ifPresent(o -> objUserNewsComment.setUser(o));//3
 
@@ -176,8 +168,8 @@ public class NewsController {
 			Calendar comment = Calendar.getInstance();
 			comment.setTime(listUserNewsComment.get(i).getNewsComment().getDateNewsComment());
 
-			long miliSeconds = current.getTimeInMillis() - comment.getTimeInMillis();// -
-																						// (long)listUserNewsComment.get(i).getNewsComment().getDateNewsComment().getDate();
+			long miliSeconds = current.getTimeInMillis() - comment.getTimeInMillis();
+																						
 
 			long seconds = miliSeconds / 1000;
 
@@ -235,6 +227,28 @@ public class NewsController {
 		return "newsUser";
 	}
 
+	
+	@RequestMapping("/eliminarComentario")
+	public String deleteNewsComment(@RequestParam("idUserNewsComment") Integer idUserNewsComment, 
+			@RequestParam("idUserLogged") Integer idUserLogged, RedirectAttributes redirectAttributes) {
+		
+		UserNewsComment userNewsComment = uncService.findByUNCId(idUserNewsComment);
+		
+		
+		if(userNewsComment.getNewsComment().getUser().getIdUser() == idUserLogged) {
+			//PRIMERO ELIMINAMOS TODAS LAS REACCIONES
+			uncService.deleteBatch(userNewsComment.getNewsComment().getIdNewsComment());
+			
+			//LUEGO ELIMINAMOS EL COMENTARIO
+			ncService.delete(userNewsComment.getNewsComment().getIdNewsComment());
+		}
+		
+		redirectAttributes.addAttribute("id",userNewsComment.getNewsComment().getNews().getIdNews());//noticia
+		redirectAttributes.addAttribute("idUser",idUserLogged);//userlogged
+		return "redirect:/noticia/verNoticia";
+	}
+	
+	
 	@RequestMapping("/registraComentario")
 	public String register(@ModelAttribute("newsComment") NewsComment objNewsComment,
 			@RequestParam(value = "idUser") Integer idUser, @RequestParam(value = "idNews") Integer idNews,
@@ -245,7 +259,7 @@ public class NewsController {
 			// Para registrar un objeto NewsComment
 			UserNewsComment objUserNewsComment = new UserNewsComment();
 
-			Optional<User> objUser = uService.findById(idUser);
+			Optional<Users> objUser = uService.findById(idUser);
 			if (objUser.isPresent())
 				objUser.ifPresent(o -> objUserNewsComment.setUser(o)); // (1)
 			
@@ -273,15 +287,7 @@ public class NewsController {
 				if (news.isPresent())
 					news.ifPresent(o -> redirectAttributes.addAttribute("id", o.getIdNews())); // REDIRECT ATTRIBUTE
 
-				// List<UserNewsComment>listUserNewsComment =
-				// uncService.findAllByUserAndNewsId(idUser, idNews); //FIND BY USERID and
-				// model.addAttribute("listUserNewsComments", listUserNewsComment); //LISTA DE
-				// NOTICIAS (AUXILIAR)
-
-				// model.addAttribute("newsComment", new NewsComment()); //OBJETO PARA CREAR
-				// OTRA NOTICIA
-
-				Optional<User> user = uService.findById(idUser);
+				Optional<Users> user = uService.findById(idUser);
 				if (user.isPresent())
 					user.ifPresent(o -> redirectAttributes.addAttribute("idUser", o.getIdUser())); // REDIRECT ATTRIBUTE
 
@@ -359,7 +365,7 @@ public class NewsController {
 		if (news.isPresent())
 			news.ifPresent(o -> redirectAttributes.addAttribute("id", o.getIdNews())); // REDIRECT ATTRIBUTE
 
-		Optional<User> user = uService.findById(idUser);
+		Optional<Users> user = uService.findById(idUser);
 		if (user.isPresent())
 			user.ifPresent(o -> redirectAttributes.addAttribute("idUser", o.getIdUser())); // REDIRECT ATTRIBUTE
 
@@ -431,7 +437,7 @@ public class NewsController {
 		if (news.isPresent())
 			news.ifPresent(o -> redirectAttributes.addAttribute("id", o.getIdNews())); // REDIRECT ATTRIBUTE
 
-		Optional<User> user = uService.findById(idUser);
+		Optional<Users> user = uService.findById(idUser);
 		if (user.isPresent())
 			user.ifPresent(o -> redirectAttributes.addAttribute("idUser", o.getIdUser())); // REDIRECT ATTRIBUTE
 		

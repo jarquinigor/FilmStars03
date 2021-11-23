@@ -32,7 +32,7 @@ public class NewsComment implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "idUser", nullable = false)
-	private User user;
+	private Users user;
 	
 	@Column(name="textNewsComment", nullable=false, length=400)
 	private String textNewsComment;
@@ -58,7 +58,7 @@ public class NewsComment implements Serializable {
 		dislikesNewsComment=0;
 	}
 
-	public NewsComment(int idNewsComment, News news, User user, String textNewsComment, Date dateNewsComment,
+	public NewsComment(int idNewsComment, News news, Users user, String textNewsComment, Date dateNewsComment,
 			int likesNewsComment, int dislikesNewsComment, String textDateNewsComment) {
 		super();
 		this.idNewsComment = idNewsComment;
@@ -87,11 +87,11 @@ public class NewsComment implements Serializable {
 		this.news = news;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 
