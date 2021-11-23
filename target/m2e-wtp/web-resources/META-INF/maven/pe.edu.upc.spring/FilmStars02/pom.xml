@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pe.edu.upc.spring</groupId>
-	<artifactId>FilmStars02</artifactId>
+	<artifactId>FilmStars03</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>FilmStars02</name>
