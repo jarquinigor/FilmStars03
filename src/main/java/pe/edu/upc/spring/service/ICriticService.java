@@ -8,8 +8,8 @@ import pe.edu.upc.spring.model.Critic;
 public interface ICriticService {
 	public boolean save(Critic critic);
 	public void delete(int idCritic);
-	public List<Critic> findAll();
-	public List<Critic> findAllSortAsc();
+	public List<Critic> findAllSortNameAsc();
+	public List<Critic> findAllSortIdAsc();
 	public Optional<Critic>findById(int idCritic);
 	public List<Critic> findByName(String nameCritic);
 }

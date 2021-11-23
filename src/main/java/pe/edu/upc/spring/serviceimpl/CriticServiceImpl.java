@@ -36,13 +36,13 @@ public class CriticServiceImpl implements ICriticService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Critic> findAll() {
-		return dCritic.findAll();
+	public List<Critic> findAllSortNameAsc() {
+		return dCritic.findAll(Sort.by(Sort.Direction.ASC,"nameCritic"));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Critic> findAllSortAsc() {
+	public List<Critic> findAllSortIdAsc() {
 		return dCritic.findAll(Sort.by(Sort.Direction.ASC,"idCritic"));
 	}
 	

@@ -59,7 +59,7 @@ public class GenreController {
 		else {
 			model.addAttribute("genre", objGenre);
 			model.addAttribute("genrebusqueda", new Genre());
-			model.addAttribute("listGenres", gService.findAllSortAsc());
+			model.addAttribute("listGenres", gService.findAllSortNameAsc());
 			return "listGenre";
 		}
 	}
@@ -69,14 +69,16 @@ public class GenreController {
 		try {
 			if(id!=null && id>0) {
 				gService.delete(id);
-				model.put("genre",new Genre());
+				model.put("genre", new Genre());
 				model.put("genrebusqueda", new Genre());
-				model.put("listGenres", gService.findAllSortAsc());
+				model.put("listGenres", gService.findAllSortNameAsc());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-			model.put("listGenres", gService.findAll());
+			model.put("genre", new Genre());
+			model.put("genrebusqueda", new Genre());
+			model.put("listGenres", gService.findAllSortNameAsc());
 		}
 		
 		return "listGenre";
@@ -84,7 +86,7 @@ public class GenreController {
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
-		model.put("listGenres", gService.findAllSortAsc());
+		model.put("listGenres", gService.findAllSortNameAsc());
 		model.put("genre",new Genre());
 		model.put("genrebusqueda", new Genre());
 		

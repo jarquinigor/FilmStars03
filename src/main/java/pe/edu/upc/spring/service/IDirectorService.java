@@ -8,8 +8,8 @@ import pe.edu.upc.spring.model.Director;
 public interface IDirectorService {
 	public boolean save(Director director);
 	public void delete(int idDirector);
-	public List<Director> findAll();
-	public List<Director> findAllSortAsc();
+	public List<Director> findAllSortNameAsc();
+	public List<Director> findAllSortIdAsc();
 	public Optional<Director>findById(int idDirector);
 	public List<Director> findByName(String nameDirector);
 }

@@ -54,7 +54,7 @@ body {
 		<nav class="navbar navbar-expand-lg navbar-dark"
 			style="margin-bottom: 0px; margin-top: 10px;">
 
-			<a class="navbar-brand" th:href="@{/usuario/bienvenidoUsuario}"
+			<a class="navbar-brand" th:href="@{/welcome/bienvenido}"
 				style="display: table; margin: 7px; padding-top: 5px; padding-bottom: 5px;">
 				<img th:src="@{/img/filmstars.png}" alt="" height="60" />
 			</a>
@@ -76,12 +76,12 @@ body {
 				<ul class="navbar-nav ml-auto w-auto justify-content-end"
 					style="font-size: 0.92rem;">
 					<li class="nav-item"><a class="nav-link"
-						th:href="@{/usuario/bienvenidoUsuario}" style="color: white;">INICIO</a></li>
+						th:href="@{/welcome/bienvenido}" style="color: white;">INICIO</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/pelicula/verPeliculas}"
 						style="color: white;">PELÍCULAS</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"
 						style="color: white;">FILMSPACE</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
+					<li class="nav-item"><a class="nav-link" th:href="@{/noticia/verNoticias}"
 						style="color: white;">NOTICIAS</a></li>
 
 					<li class="nav-item dropdown">
@@ -92,9 +92,10 @@ body {
 							height="30" />
 						</a>
 						<ul class="dropdown-menu dropdown-menu-right fade-down">
-							<li>
-								<a class="dropdown-item" th:href="@{/usuario/cerrarSesion}">Cerrar
-									Sesión</a>
+							<li><form th:action="@{/logout}" method="post">
+								<button type="submit" class="dropdown-item">Cerrar
+									Sesión</button>
+								</form>
 							</li>
 						</ul>
 					</li>

@@ -36,13 +36,7 @@ public class CriticReviewServiceImpl implements ICriticReviewService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<CriticReview> findAll() {
-		return dCriticReview.findAll();
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<CriticReview> findAllSortAsc() {
+	public List<CriticReview> findAllSortIdAsc() {
 		return dCriticReview.findAll(Sort.by(Sort.Direction.ASC,"idCriticReview"));
 	}
 	
@@ -62,5 +56,11 @@ public class CriticReviewServiceImpl implements ICriticReviewService {
 	@Transactional(readOnly = true)
 	public List<CriticReview> findByMovieName(String nameMovie) {
 		return dCriticReview.findByMovieName(nameMovie);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<CriticReview> findByMovieId(int idMovie){
+		return dCriticReview.findByMovieId(idMovie);
 	}
 }

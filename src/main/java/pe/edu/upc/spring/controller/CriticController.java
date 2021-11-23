@@ -25,11 +25,6 @@ public class CriticController {
 	@Autowired
 	private ICriticService cService;
 	
-	@RequestMapping("/bienvenido")
-	public String goWelcomePage() {
-		return "welcome"; 
-	}
-	
 	@RequestMapping("/registrar")
 	public String register(@ModelAttribute("critic") Critic objCritic, BindingResult binRes, Model model) 
 		throws ParseException
@@ -59,7 +54,7 @@ public class CriticController {
 		else {
 			model.addAttribute("critic", objCritic);
 			model.addAttribute("criticbusqueda", new Critic());
-			model.addAttribute("listCritics", cService.findAllSortAsc());
+			model.addAttribute("listCritics", cService.findAllSortIdAsc());
 			return "listCritic";                   
 		}
 	}
@@ -71,12 +66,14 @@ public class CriticController {
 				cService.delete(id);
 				model.put("critic",new Critic());
 				model.put("criticbusqueda", new Critic());
-				model.put("listCritics", cService.findAllSortAsc());
+				model.put("listCritics", cService.findAllSortIdAsc());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-			model.put("listCritics", cService.findAll());
+			model.put("listCritics", cService.findAllSortIdAsc());
+			model.put("critic", new Critic());
+			model.put("criticbusqueda", new Critic());
 		}
 		
 		return "listCritic";
@@ -84,7 +81,7 @@ public class CriticController {
 	
 	@RequestMapping("/listar")
 	public String list(Map<String, Object> model) {
-		model.put("listCritics", cService.findAllSortAsc());
+		model.put("listCritics", cService.findAllSortIdAsc());
 		model.put("critic",new Critic());
 		model.put("criticbusqueda", new Critic());
 		

@@ -46,7 +46,7 @@ body, html {
 	<br>
 	<div class="container">
 		<div class="row justify-content-center align-items-center">
-			<form th:action="@{/usuario/registrar}" method="post"
+			<form th:action="@{/auth/registro}" method="post"
 				th:object="${user}">
 				<div class="row">
 					<div class="col-sm-12 form-group text-center"
@@ -55,35 +55,18 @@ body, html {
 						<label for="nombre" style="font-weight: normal !important;">Nombre
 							de usuario:</label> <input type="text" class="form-control"
 							th:field="*{nameUser}" id="nombre"></input>
-						<div class="alert alert-danger"
-							th:if="${#fields.hasErrors('nameUser')}" th:errors="*{nameUser}"></div>
 					</div>
 
 					<div class="col-sm-6 form-group">
 						<label for="nombre" style="font-weight: normal !important;">Correo
 							electrónico:</label> <input type="email" class="form-control"
-							th:field="*{emailUser}" id="email"></input>
-						<div class="alert alert-danger"
-							th:if="${#fields.hasErrors('emailUser')}"
-							th:errors="*{emailUser}"></div>
+							th:field="*{username}" id="email"></input>
 					</div>
 
 					<div class="col-sm-6 form-group">
 						<label for="nombre" style="font-weight: normal !important;">Contraseña:</label>
 						<input type="password" class="form-control"
-							th:field="*{passwordUser}" id="password"></input>
-						<div class="alert alert-danger"
-							th:if="${#fields.hasErrors('passwordUser')}"
-							th:errors="*{passwordUser}"></div>
-					</div>
-
-					<div class="col-sm-6 form-group">
-						<label for="nombre" style="font-weight: normal !important;">Repita
-							su contraseña:</label> <input type="password" class="form-control"
-							th:field="*{passwordRepeatUser}" id="passwordconf"></input>
-						<div class="alert alert-danger"
-							th:if="${#fields.hasErrors('passwordRepeatUser')}"
-							th:errors="*{passwordRepeatUser}"></div>
+							th:field="*{password}" id="password"></input>
 					</div>
 
 					<div class="col-sm-6 form-group text-right">
@@ -91,7 +74,7 @@ body, html {
 							cuenta</button>
 					</div>
 					<div class="col-sm-6 form-group text-left">
-						<a th:href="@{/usuario/bienvenido}" class="btn btn-danger">Cancelar</a>
+						<a href="#" class="btn btn-danger">Cancelar</a>
 					</div>
 
 				</div>

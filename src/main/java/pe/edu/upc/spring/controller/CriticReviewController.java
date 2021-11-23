@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sun.el.parser.ParseException;
 
 import pe.edu.upc.spring.model.CriticReview;
+import pe.edu.upc.spring.model.Movie;
 import pe.edu.upc.spring.service.ICriticService;
 import pe.edu.upc.spring.service.IMovieService;
 import pe.edu.upc.spring.service.ICriticReviewService;
@@ -33,17 +34,12 @@ public class CriticReviewController {
 	@Autowired
 	private ICriticReviewService crService;
 	
-	@RequestMapping("/bienvenido")
-	public String goWelcomePage() {
-		return "welcome"; 
-	}
-	
 	@RequestMapping("/registrar")
-	public String register(@ModelAttribute("CriticReview") CriticReview objCriticReview, BindingResult binRes, Model model) 
+	public String register(@ModelAttribute("criticReview") CriticReview objCriticReview, BindingResult binRes, Model model) 
 		throws ParseException
 	{
 		if (binRes.hasErrors())
-			return "CriticReview";
+			return "listCriticReview";
 		else {
 			boolean flag = crService.save(objCriticReview);
 			if(flag)
@@ -66,9 +62,9 @@ public class CriticReviewController {
 		}
 		else {
 			model.addAttribute("criticReviewbusqueda", new CriticReview());
-			model.addAttribute("listCritics",cService.findAllSortAsc());
-			model.addAttribute("listMovies",mService.findAllSortAsc());
-			model.addAttribute("listCriticReviews", crService.findAllSortAsc());
+			model.addAttribute("listCritics",cService.findAllSortNameAsc());
+			model.addAttribute("listMovies",mService.findAllSortNameAsc());
+			model.addAttribute("listCriticReviews", crService.findAllSortIdAsc());
 			if(objCriticReview.isPresent())
 				objCriticReview.ifPresent(o -> model.addAttribute("criticReview",o));
 			
@@ -83,14 +79,18 @@ public class CriticReviewController {
 				crService.delete(id);
 				model.put("criticReview",new CriticReview()); //importante
 				model.put("criticReviewbusqueda", new CriticReview()); //importante
-				model.put("listCritics",cService.findAllSortAsc());
-				model.put("listMovies",mService.findAllSortAsc());
-				model.put("listCriticReviews", crService.findAllSortAsc());
+				model.put("listCritics",cService.findAllSortNameAsc());
+				model.put("listMovies",mService.findAllSortNameAsc());
+				model.put("listCriticReviews", crService.findAllSortIdAsc());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-			model.put("listMovies", mService.findAll());
+			model.put("criticReview",new CriticReview()); //importante
+			model.put("criticReviewbusqueda", new CriticReview()); //importante
+			model.put("listCritics",cService.findAllSortNameAsc());
+			model.put("listMovies",mService.findAllSortNameAsc());
+			model.put("listCriticReviews", crService.findAllSortIdAsc());
 		}
 		return "listCriticReview";
 	}
@@ -99,9 +99,9 @@ public class CriticReviewController {
 	public String list(Map<String, Object> model) {
 		model.put("criticReview",new CriticReview());
 		model.put("criticReviewbusqueda", new CriticReview());
-		model.put("listCritics",cService.findAllSortAsc());
-		model.put("listMovies",mService.findAllSortAsc());
-		model.put("listCriticReviews", crService.findAllSortAsc());
+		model.put("listCritics",cService.findAllSortNameAsc());
+		model.put("listMovies",mService.findAllSortNameAsc());
+		model.put("listCriticReviews", crService.findAllSortIdAsc());
 		return "listCriticReview";
 	}
 	
@@ -116,10 +116,25 @@ public class CriticReviewController {
 			listCriticReviews = crService.findByMovieName(CriticReview.getCritic().getNameCritic());
 		}
 		model.put("criticReview", new CriticReview());
-		model.put("listCritics",cService.findAllSortAsc());
-		model.put("listMovies",mService.findAllSortAsc());
+		model.put("listCritics",cService.findAllSortNameAsc());
+		model.put("listMovies",mService.findAllSortNameAsc());
 		model.put("listCriticReviews", listCriticReviews);
 		
 		return "listCriticReview";
+	}
+	
+	@RequestMapping("/reviews")
+	public String goMovieUserReviewPage(Model model, @RequestParam(value="idMovie") Integer idMovie) {
+		
+		List<CriticReview>objReview = crService.findByMovieId(idMovie);
+		
+		model.addAttribute("listCriticReviews",objReview);
+		model.addAttribute("criticReview", new CriticReview());
+		
+		Optional <Movie>objMovie = mService.findById(idMovie);
+		if(objMovie.isPresent())
+			objMovie.ifPresent(o -> model.addAttribute("movie", o));
+		
+		return "movieCriticReview";
 	}
 }
