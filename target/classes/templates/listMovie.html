@@ -29,6 +29,7 @@
 
 <link href='https://fonts.googleapis.com/css?family=Be Vietnam'
 	rel='stylesheet' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
 <style>
 body {
@@ -161,8 +162,8 @@ body {
 				</div>
 
 			</div>
-			<button type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus"></span> Grabar
+			<button type="submit" class="btn btn-success">
+				<span class="bi bi-plus-circle"></span> Grabar
 			</button>
 
 		</form>
@@ -180,8 +181,8 @@ body {
 						id="nombre"/>
 					<br>
 					<div align="left">
-						<button type="submit" class="btn btn-danger">Buscar</button>
-						<a th:href="@{/pelicula/listar}" class="btn btn-primary">Limpiar</a>
+						<button type="submit" class="btn btn-primary"><span class="bi bi-search"></span> Buscar</button>
+						<a th:href="@{/pelicula/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
 					</div>
 					<br>
 					<table class="table table-dark table-bordered table-hover table-striped"
@@ -219,10 +220,10 @@ body {
 									width="50" height="50" alt="logo" align="middle"></img></td>
 								<td align="center"><img th:src="${m.imgCarrMovie3}"
 									width="50" height="50" alt="logo" align="middle"></img></td>
-								<td align="center"><a
-									th:href="@{/pelicula/eliminar?id=}+${m.idMovie}">Eliminar</a></td>
-								<td align="center"><a
-									th:href="@{'/pelicula/modificar/'}+${m.idMovie}">Modificar</a></td>
+								<td align="center"><a class="btn btn-danger"
+									th:href="@{/pelicula/eliminar?id=}+${m.idMovie}"><span class="bi bi-trash"></span> Eliminar</a></td>
+								<td align="center"><a class="btn btn-warning"
+									th:href="@{'/pelicula/modificar/'}+${m.idMovie}"><span class="bi bi-pen"></span> Modificar</a></td>
 							</tr>
 						</tbody>
 					</table>
