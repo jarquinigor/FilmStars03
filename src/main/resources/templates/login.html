@@ -45,30 +45,23 @@ body, html {
 	<br>
 	<div class="container">
 		<div class="row justify-content-center align-items-center">
-			<form class="col-sm-4" th:action="@{/usuario/logear}" method="post"
-				th:object="${userlogin}">
+			<form class="col-sm-4" th:action="@{/login}" method="post">
 				<div class="form-group text-center" style="font-size: 30px;">Inicio
 					de sesión</div>
 				<div class="form-group">
 					<label for="nombre" style="font-weight: normal !important;">Correo
-						electrónico:</label> <input type="email" class="form-control"
-						th:field="*{emailUser}" id="nombre"></input>
-					<div class="alert alert-danger"
-						th:if="${#fields.hasErrors('emailUser')}" th:errors="*{emailUser}"></div>
+						electrónico:</label> <input type="email" name="username"
+						class="form-control" id="nombre"></input>
 				</div>
 				<div class="form-group">
 					<label for="nombre" style="font-weight: normal !important;">Contraseña:</label>
-					<input type="password" class="form-control"
-						th:field="*{passwordUser}" id="password"></input>
-					<div class="alert alert-danger"
-						th:if="${#fields.hasErrors('passwordUser')}"
-						th:errors="*{passwordUser}"></div>
+					<input type="password" class="form-control" name="password"
+						id="password"></input>
 				</div>
 				<div class="form-group text-center">
 					<button style="margin-right: 2px;" type="submit"
 						class="btn btn-success">Ingresar</button>
-					<a style="margin-left: 2px;" href="/usuario/bienvenido"
-						class="btn btn-danger">Cancelar</a>
+					<a style="margin-left: 2px;" href="#" class="btn btn-danger">Cancelar</a>
 				</div>
 			</form>
 		</div>

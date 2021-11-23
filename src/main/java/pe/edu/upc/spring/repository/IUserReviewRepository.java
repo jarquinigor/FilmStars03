@@ -19,4 +19,7 @@ public interface IUserReviewRepository extends JpaRepository<UserReview, Integer
 	
 	@Query("from UserReview ur where ur.movie.idMovie = :idMovie and ur.user.idUser = :idUser")
 	List<UserReview> findByMovieUserId(@Param("idMovie") int idMovie, @Param("idUser") int idUser);
+	
+	@Query("from UserReview ur where ur.idUserReview = :idUserReview")
+	UserReview findByURId(@Param("idUserReview") int idUserReview);
 }

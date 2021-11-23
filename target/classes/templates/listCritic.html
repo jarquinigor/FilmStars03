@@ -29,6 +29,7 @@
 
 <link href='https://fonts.googleapis.com/css?family=Be Vietnam'
 	rel='stylesheet' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
 <style>
 body {
@@ -86,8 +87,8 @@ body {
 						th:errors="*{nameCritic}"></div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus"></span> Grabar
+			<button type="submit" class="btn btn-success">
+				<span class="bi bi-plus-circle"></span> Grabar
 			</button>
 
 		</form>
@@ -104,10 +105,11 @@ body {
 						id="nombre"/>
 					<br>
 					<div align="left">
-						<button type="submit" class="btn btn-danger">Buscar</button>
-						<a th:href="@{/critico/listar}" class="btn btn-primary">Limpiar</a>
+						<button type="submit" class="btn btn-primary"><span class="bi bi-search"></span> Buscar</button>
+						<a th:href="@{/critico/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
 					</div>
 					<br>
+					<div class="table-responsive">
 					<table class="table table-dark table-bordered table-hover table-striped"
 						style="color: white; background-color: transparent" id="tab_logic">
 						<thead>
@@ -122,13 +124,14 @@ body {
 							<tr th:each="c: ${listCritics}">
 								<td align="center" th:text="${c.idCritic}"></td>
 								<td align="center" th:text="${c.nameCritic}"></td>
-								<td align="center"><a
-									th:href="@{/critico/eliminar?id=}+${c.idCritic}">Eliminar</a></td>
-								<td align="center"><a
-									th:href="@{'/critico/modificar/'}+${c.idCritic}">Modificar</a></td>
+								<td align="center"><a class="btn btn-danger"
+									th:href="@{/critico/eliminar?id=}+${c.idCritic}"><span class="bi bi-trash"></span> Eliminar</a></td>
+								<td align="center"><a class="btn btn-warning"
+									th:href="@{'/critico/modificar/'}+${c.idCritic}"><span class="bi bi-pen"></span> Modificar</a></td>
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 			<div th:if="${mensaje}" class="alert alert-danger">

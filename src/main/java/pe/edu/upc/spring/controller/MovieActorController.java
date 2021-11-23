@@ -66,15 +66,9 @@ public class MovieActorController {
 		}
 		else {
 			model.addAttribute("movieActorbusqueda", new MovieActor());
-
 			model.addAttribute("listMovies",mService.findAllSortNameAsc());
 			model.addAttribute("listActors",aService.findAllSortNameAsc());
 			model.addAttribute("listMovieActors", maService.findAllSortIdAsc());
-
-			model.addAttribute("listMovies",mService.findAllSortAsc());
-			model.addAttribute("listActors",aService.findAllSortAsc());
-			model.addAttribute("listMovieActors", maService.findAllSortAsc());
-
 			if(objMovieActor.isPresent())
 				objMovieActor.ifPresent(o -> model.addAttribute("movieActor",o));
 			
@@ -89,28 +83,18 @@ public class MovieActorController {
 				maService.delete(id);
 				model.put("movieActor",new MovieActor()); //importante
 				model.put("movieActorbusqueda", new MovieActor()); //importante
-
 				model.put("listMovies",mService.findAllSortNameAsc());
 				model.put("listActors",aService.findAllSortNameAsc());
 				model.put("listMovieActors", maService.findAllSortIdAsc());
-
-				model.put("listMovies",mService.findAllSortAsc());
-				model.put("listActors",aService.findAllSortAsc());
-				model.put("listMovieActors", maService.findAllSortAsc());
-
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 			model.put("Mensaje", "Ocurrio un error");
-
 			model.put("movieActor",new MovieActor()); //importante
 			model.put("movieActorbusqueda", new MovieActor()); //importante
 			model.put("listMovies",mService.findAllSortNameAsc());
 			model.put("listActors",aService.findAllSortNameAsc());
 			model.put("listMovieActors", maService.findAllSortIdAsc());
-
-			model.put("listMovies", mService.findAll());
-
 		}
 		return "listMovieActor";
 	}
@@ -119,15 +103,9 @@ public class MovieActorController {
 	public String list(Map<String, Object> model) {
 		model.put("movieActor",new MovieActor());
 		model.put("movieActorbusqueda", new MovieActor());
-
 		model.put("listMovies",mService.findAllSortNameAsc());
 		model.put("listActors",aService.findAllSortNameAsc());
 		model.put("listMovieActors", maService.findAllSortIdAsc());
-
-		model.put("listMovies",mService.findAllSortAsc());
-		model.put("listActors",aService.findAllSortAsc());
-		model.put("listMovieActors", maService.findAllSortAsc());
-
 		return "listMovieActor";
 	}
 	
@@ -142,13 +120,8 @@ public class MovieActorController {
 			listMovieActors = maService.findByActorName(movieActor.getMovie().getNameMovie());
 		}
 		model.put("movieActor", new MovieActor());
-
 		model.put("listMovies",mService.findAllSortNameAsc());
 		model.put("listActors",aService.findAllSortNameAsc());
-
-		model.put("listMovies",mService.findAllSortAsc());
-		model.put("listActors",aService.findAllSortAsc());
-
 		model.put("listMovieActors", listMovieActors);
 		
 		return "listMovieActor";

@@ -26,6 +26,14 @@ public interface IUserNewsCommentRepository extends JpaRepository<UserNewsCommen
 	@Query("from UserNewsComment unc where unc.user.idUser = :idUser and unc.newsComment.news.idNews = :idNews order by unc.newsComment.idNewsComment DESC")
 	List<UserNewsComment>findAllByUserAndNewsId(@Param("idUser") int idUser, @Param("idNews") int idNews);
 	
+	
+	@Query("from UserNewsComment unc where unc.newsComment.idNewsComment = :idNewsComment")
+	List<UserNewsComment>findAllByNewsCommentId(@Param("idNewsComment") int idNewsComment);
+	
+	
 	@Query("from UserNewsComment unc where unc.user.idUser = :idUser and unc.newsComment.idNewsComment = :idNewsComment")
 	List<UserNewsComment>findRow(@Param("idUser") int idUser, @Param("idNewsComment") int idNewsComment);
+	
+	@Query("from UserNewsComment unc where unc.idUserNewsComment = :idUserNewsComment")
+	UserNewsComment findByUNCId(@Param("idUserNewsComment") int idUserNewsComment);
 }

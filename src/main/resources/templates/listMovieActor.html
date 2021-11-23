@@ -130,6 +130,7 @@ body {
 						<a th:href="@{/peliculaActor/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
 					</div>
 					<br>
+					<div class="table-responsive">
 					<table class="table table-dark table-bordered table-hover table-striped"
 						style="color: white; background-color: transparent" id="tab_logic">
 						<thead>
@@ -137,6 +138,7 @@ body {
 								<th class="text-center">CODIGO</th>
 								<th class="text-center">PELICULA</th>
 								<th class="text-center">ACTOR</th>
+								<th class="text-center">PERSONAJE</th>
 								<th class="text-center">OPERACION</th>
 								<th class="text-center">OPERACION</th>
 							</tr>
@@ -146,6 +148,7 @@ body {
 								<td align="center" th:text="${ma.idMovieActor}"></td>
 								<td align="center" th:text="${ma.movie.nameMovie}"></td>
 								<td align="center" th:text="${ma.actor.nameActor}"></td>
+								<td align="center" th:text="${ma.nameCharacter}"></td>
 								<td align="center"><a class="btn btn-danger"
 									th:href="@{/peliculaActor/eliminar?id=}+${ma.idMovieActor}"><span class="bi bi-trash"></span> Eliminar</a></td>
 								<td align="center"><a class="btn btn-warning"
@@ -153,6 +156,7 @@ body {
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 			<div th:if="${mensaje}" class="alert alert-danger">

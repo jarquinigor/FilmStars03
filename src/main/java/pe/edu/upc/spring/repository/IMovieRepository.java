@@ -11,10 +11,6 @@ import pe.edu.upc.spring.model.Movie;
 
 @Repository
 public interface IMovieRepository extends JpaRepository<Movie, Integer> {
-
 	@Query("from Movie m where LOWER(m.nameMovie) like LOWER(concat('%',:nameMovie,'%')) order by m.idMovie ASC")
-
-	@Query("from Movie m where m.nameMovie like %:nameMovie% order by m.idMovie ASC")
-
 	List<Movie> findByName(@Param("nameMovie") String nameMovie);
 }

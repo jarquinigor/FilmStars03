@@ -36,13 +36,7 @@ public class MovieGenreServiceImpl implements IMovieGenreService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<MovieGenre> findAll() {
-		return dMovieGenre.findAll();
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<MovieGenre> findAllSortAsc() {
+	public List<MovieGenre> findAllSortIdAsc() {
 		return dMovieGenre.findAll(Sort.by(Sort.Direction.ASC,"idMovieGenre"));
 	}
 	
@@ -62,5 +56,17 @@ public class MovieGenreServiceImpl implements IMovieGenreService {
 	@Transactional(readOnly = true)
 	public List<MovieGenre> findByGenreName(String nameGenre) {
 		return dMovieGenre.findByGenreName(nameGenre);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<MovieGenre> findByMovieId(int idMovie) {
+		return dMovieGenre.findByMovieId(idMovie);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<MovieGenre> findByGenreId(int idGenre) {
+		return dMovieGenre.findByGenreId(idGenre, Sort.by(Sort.Direction.ASC,"movie.nameMovie"));
 	}
 }

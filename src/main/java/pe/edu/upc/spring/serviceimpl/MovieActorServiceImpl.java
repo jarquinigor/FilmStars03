@@ -36,13 +36,7 @@ public class MovieActorServiceImpl implements IMovieActorService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<MovieActor> findAll() {
-		return dMovieActor.findAll();
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<MovieActor> findAllSortAsc() {
+	public List<MovieActor> findAllSortIdAsc() {
 		return dMovieActor.findAll(Sort.by(Sort.Direction.ASC,"idMovieActor"));
 	}
 	
@@ -62,5 +56,11 @@ public class MovieActorServiceImpl implements IMovieActorService {
 	@Transactional(readOnly = true)
 	public List<MovieActor> findByActorName(String nameActor) {
 		return dMovieActor.findByActorName(nameActor);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<MovieActor> findByMovieId(int idMovie){
+		return dMovieActor.findByMovieId(idMovie);
 	}
 }

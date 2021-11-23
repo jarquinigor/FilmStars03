@@ -29,6 +29,7 @@
 
 <link href='https://fonts.googleapis.com/css?family=Be Vietnam'
 	rel='stylesheet' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
 <style>
 body {
@@ -85,8 +86,8 @@ body {
 						th:errors="*{nameDirector}"></div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus"></span> Grabar
+			<button type="submit" class="btn btn-success">
+				<span class="bi bi-plus-circle"></span> Grabar
 			</button>
 
 		</form>
@@ -102,10 +103,11 @@ body {
 						placeholder="Ingrese el nombre de un director para buscar"
 						id="nombre"/> <br>
 					<div align="left">
-						<button type="submit" class="btn btn-danger">Buscar</button>
-						<a th:href="@{/director/listar}" class="btn btn-primary">Limpiar</a>
+						<button type="submit" class="btn btn-primary"><span class="bi bi-search"></span> Buscar</button>
+						<a th:href="@{/director/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
 					</div>
 					<br>
+					<div class="table-responsive">
 					<table class="table table-dark table-bordered table-hover table-striped"
 						style="color: white; background-color: transparent" id="tab_logic">
 						<thead>
@@ -120,13 +122,14 @@ body {
 							<tr th:each="d: ${listDirectors}">
 								<td align="center" th:text="${d.idDirector}"></td>
 								<td align="center" th:text="${d.nameDirector}"></td>
-								<td align="center"><a
-									th:href="@{/director/eliminar?id=}+${d.idDirector}">Eliminar</a></td>
-								<td align="center"><a
-									th:href="@{'/director/modificar/'}+${d.idDirector}">Modificar</a></td>
+								<td align="center"><a class="btn btn-danger"
+									th:href="@{/director/eliminar?id=}+${d.idDirector}"><span class="bi bi-trash"></span> Eliminar</a></td>
+								<td align="center"><a class="btn btn-warning"
+									th:href="@{'/director/modificar/'}+${d.idDirector}"><span class="bi bi-pen"></span> Modificar</a></td>
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 			<div th:if="${mensaje}" class="alert alert-danger">

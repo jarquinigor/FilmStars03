@@ -30,6 +30,7 @@
 
 <link href='https://fonts.googleapis.com/css?family=Be Vietnam'
 	rel='stylesheet' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 
 <style>
 body {
@@ -97,8 +98,8 @@ body {
 					</div>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus"></span> Grabar
+			<button type="submit" class="btn btn-success">
+				<span class="bi bi-plus-circle"></span> Grabar
 			</button>
 
 		</form>
@@ -115,10 +116,11 @@ body {
 						placeholder="Ingrese un nombre de actor para buscar" id="nombre" />
 					<br>
 					<div align="left">
-						<button type="submit" class="btn btn-danger">Buscar</button>
-						<a th:href="@{/actor/listar}" class="btn btn-primary">Limpiar</a>
+						<button type="submit" class="btn btn-primary"><span class="bi bi-search"></span> Buscar</button>
+						<a th:href="@{/actor/listar}" class="btn btn-secondary"><span class="bi bi-eraser"></span> Limpiar</a>
 					</div>
 					<br>
+					<div class="table-responsive">
 					<table
 						class="table table-dark table-bordered table-hover table-striped"
 						style="color: white; background-color: transparent" id="tab_logic">
@@ -137,13 +139,14 @@ body {
 								<td align="center" th:text="${a.nameActor}"></td>
 								<td align="center"><img th:src="${a.imgActor}" width="50"
 									height="50" alt="logo" align="middle"></img></td>
-								<td align="center"><a
-									th:href="@{/actor/eliminar?id=}+${a.idActor}">Eliminar</a></td>
-								<td align="center"><a
-									th:href="@{'/actor/modificar/'}+${a.idActor}">Modificar</a></td>
+								<td align="center"><a class="btn btn-danger"
+									th:href="@{/actor/eliminar?id=}+${a.idActor}"><span class="bi bi-trash"></span> Eliminar</a></td>
+								<td align="center"><a class="btn btn-warning"
+									th:href="@{'/actor/modificar/'}+${a.idActor}"><span class="bi bi-pen"></span> Modificar</a></td>
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 			<div th:if="${mensaje}" class="alert alert-danger">
